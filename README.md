@@ -1,6 +1,6 @@
 # letsrenew
 
-A simple docker container that automatically runs certbot renew periodically.
+A simple docker container that automatically runs `certbot renew` periodically.
 Stands in for a cron job, with less maintenance and no permission or
 environment issues to worry about, such as would normally accompany a cron
 job.

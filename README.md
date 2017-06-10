@@ -28,3 +28,16 @@ docker run -d \
     brightmd/letsrenew:latest
 ```
 
+**On a Mac**:
+
+If you are using [Docker for
+Mac](https://docs.docker.com/docker-for-mac/install/) this command should
+work instead:
+
+
+```
+docker run -d \
+    -v /private/etc/letsencrypt:/etc/letsencrypt \
+    --restart always \
+    brightmd/letsrenew:latest
+```

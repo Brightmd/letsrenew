@@ -8,8 +8,7 @@ job.
 
 ### Use:
 
-Before running, you should have already set up a LetsEncrypt certificate with
-certbot. This tool does not provision the initial certificate.
+#### Before running, you should have already set up a LetsEncrypt certificate with certbot. This tool does not provision the initial certificate.
 
 Run the letsrenew image, using a `-v` volume mount to overlay
 `/etc/letsencrypt` using the hosts's directory.

@@ -41,3 +41,8 @@ docker run -d \
     --restart always \
     brightmd/letsrenew:latest
 ```
+
+
+## Release Notes
+
+* 0.1: use corydodt/circus-base:0.1

@@ -1,4 +1,4 @@
-FROM corydodt/circus-base:latest
+FROM corydodt/circus-base:0.1
 
 RUN apk update \
     && apk add --no-cache --virtual build-dependencies \

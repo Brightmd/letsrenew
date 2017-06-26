@@ -5,7 +5,7 @@ Stands in for a cron job, with less maintenance and no permission or
 environment issues to worry about, such as would normally accompany a cron
 job.
 
-`letsrenew` relies on AWS Route53 for answering challenges. You must have an
+`letsrenew` can use AWS Route53 for answering challenges. You must have an
 AWS account configured to make the appropriate changes. A section of this
 document details the permissions you will need.
 
@@ -20,17 +20,20 @@ Run the letsrenew image, using a `-v` volume mount to overlay
 This also uses `--restart always` to ensure that the job survives a reboot or
 engine restart.
 
-#### You should have AWS credentials set up as well, with a policy to allow changes to resource records. See below for an example policy.
-
 
 ```
-host_letsencrypt=/etc/letsencrypt
+host_letsencrypt='/etc/letsencrypt'
+# To use this option, you must have AWS credentials set up as well, with a
+# policy to allow changes to resource records. See below for an example
+# policy.
+certbot_flags='--dns-route53'
 
 docker run \
     -d \
     --restart=always \
     -e AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id) \
     -e AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key) \
+    -e certbot_flags=$certbot_flags \
     -v ${host_letsencrypt}:/etc/letsencrypt \
     brightmd/letsrenew
 ```

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -euo pipefail
+export IFS=$'\n\t'
+
+aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+
+certbot renew ${certbot_flags:-} --dns-route53
+
+# letsencrypt recommends attempting renewals 2x per day, i.e. every 43200
+# seconds; beginning at an arbitrary time of day.
+sleep 43200

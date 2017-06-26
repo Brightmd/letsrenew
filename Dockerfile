@@ -2,6 +2,7 @@ FROM corydodt/circus-base:0.1
 
 ENV letsrenew_home=/opt/letsrenew
 RUN mkdir -p $letsrenew_home
+WORKDIR $letsrenew_home
 COPY requirements.txt $letsrenew_home
 
 RUN apk update \

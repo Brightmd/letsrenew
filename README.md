@@ -89,7 +89,7 @@ host_letsencrypt=/private/etc/letsencrypt
 }
 ```
 
-TBD: Using conditions to specify more precise control
+
 
 ## Release Notes
 

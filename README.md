@@ -10,22 +10,44 @@ AWS account configured to make the appropriate changes. A section of this
 document details the permissions you will need.
 
 
-### Use:
-
-#### Before running, you should have already set up a LetsEncrypt certificate with certbot. This tool does not provision the initial certificate.
+### Use, Initial cert creation:
 
 Run the letsrenew image, using a `-v` volume mount to overlay
 `/etc/letsencrypt` using the hosts's directory.
 
-This also uses `--restart always` to ensure that the job survives a reboot or
+You also specify some environment variables to acquire AWS credentials for the
+dns-route53 plugin, and specify `certonly_domain` to tell the container to
+acquire the cert for the new domain and then immediately quit.
+
+```
+certonly_domain=yourhost.yourzone.com
+host_letsencrypt='/etc/letsencrypt'
+# To use this option, you must have AWS credentials set up as well, with a
+# policy to allow changes to resource records. See below for an example
+# policy.
+certbot_flags='--dns-route53'
+
+docker run \
+    -e AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id) \
+    -e AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key) \
+    -e certbot_flags=$certbot_flags \
+    -e certonly_domain=$certonly_domain \
+    -v ${host_letsencrypt}:/etc/letsencrypt \
+    brightmd/letsrenew
+```
+
+
+### Use, Renewal:
+
+This container stays running in the background, checking for renewals
+periodically.
+
+It also uses `--restart always` to ensure that the job survives a reboot or
 engine restart.
 
 
 ```
 host_letsencrypt='/etc/letsencrypt'
-# To use this option, you must have AWS credentials set up as well, with a
-# policy to allow changes to resource records. See below for an example
-# policy.
 certbot_flags='--dns-route53'
 
 docker run \
@@ -41,7 +63,7 @@ docker run \
 ### On a Mac:
 
 If you are using [Docker for Mac](https://docs.docker.com/docker-for-mac/install/) 
-run the SAME COMMAND, but change the first line to:
+run the SAME COMMANDS, but change the `host_letsencrypt` variable:
 
 ```
 host_letsencrypt=/private/etc/letsencrypt

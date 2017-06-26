@@ -49,19 +49,22 @@ host_letsencrypt=/private/etc/letsencrypt
 
 ### AWS Route53 Policy example
 ```
-Version: 2012-10-17
-Id: certbot-dns-route53 sample policy
-Statement:
-  - Effect: Allow
-    Action:
-      - route53:ListHostedZones
-      - route53:GetChange
-    Resource: ["*"]
-  - Effect: Allow
-    Action:
-      - route53:ChangeResourceRecordSets
-    Resource:
-      - arn:aws:route53:::hostedzone/YOURHOSTEDZONEID
+{
+  "Version": "2012-10-17",
+  "Id": "certbot-dns-route53 sample policy",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [ "route53:ListHostedZones", "route53:GetChange" ],
+      "Resource": [ "*" ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [ "route53:ChangeResourceRecordSets" ],
+      "Resource": [ "arn:aws:route53:::hostedzone/YOURHOSTEDZONEID" ]
+    }
+  ]
+}
 ```
 
 TBD: Using conditions to specify more precise control

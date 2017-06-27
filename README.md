@@ -20,21 +20,23 @@ dns-route53 plugin, and specify `certonly_domain` to tell the container to
 acquire the cert for the new domain and then immediately quit.
 
 ```
-certonly_domain=yourhost.yourzone.com
-host_letsencrypt='/etc/letsencrypt'
 # To use this option, you must have AWS credentials set up as well, with a
 # policy to allow changes to resource records. See below for an example
 # policy.
 certbot_flags='--dns-route53'
 
 docker run \
+    -e certonly_domain=yourhost.yourzone.com \
+    -e certbot_flags=$certbot_flags \
     -e AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id) \
     -e AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key) \
-    -e certbot_flags=$certbot_flags \
-    -e certonly_domain=$certonly_domain \
-    -v ${host_letsencrypt}:/etc/letsencrypt \
-    brightmd/letsrenew
+    -v /etc/letsencrypt:/etc/letsencrypt \
+    brightmd/letsrenew:0.2
 ```
+
+*If you are using Docker for Mac, replace `-v
+/etc/letsencrypt:/etc/letsencrypt` with: `-v
+/private/etc/letsencrypt:/etc/letsencrypt`*
 
 
 ### Use, Renewal:
@@ -47,7 +49,6 @@ engine restart.
 
 
 ```
-host_letsencrypt='/etc/letsencrypt'
 certbot_flags='--dns-route53'
 
 docker run \
@@ -56,17 +57,8 @@ docker run \
     -e AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id) \
     -e AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key) \
     -e certbot_flags=$certbot_flags \
-    -v ${host_letsencrypt}:/etc/letsencrypt \
-    brightmd/letsrenew
-```
-
-### On a Mac:
-
-If you are using [Docker for Mac](https://docs.docker.com/docker-for-mac/install/) 
-run the SAME COMMANDS, but change the `host_letsencrypt` variable:
-
-```
-host_letsencrypt=/private/etc/letsencrypt
+    -v /etc/letsencrypt:/etc/letsencrypt \
+    brightmd/letsrenew:0.2
 ```
 
 ### AWS Route53 Policy example

@@ -23,7 +23,7 @@ acquire the cert for the new domain and then immediately quit.
 # To use this option, you must have AWS credentials set up as well, with a
 # policy to allow changes to resource records. See below for an example
 # policy.
-certbot_flags='--dns-route53'
+certbot_flags='--dns-route53,-mYOUREMAIL@IDK.COM'
 
 docker run \
     -e certonly_domain=yourhost.yourzone.com \
@@ -85,5 +85,6 @@ docker run \
 
 ## Release Notes
 
+* 0.3: (2017-09-28) parse multiple comma-separated certbot args
 * 0.2: (2017-06-26) switch to certbot-dns-route53
 * 0.1: use corydodt/circus-base:0.1

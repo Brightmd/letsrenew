@@ -6,13 +6,20 @@ export IFS=$'\n\t'
 aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
 aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
 
+
+certbot_args() {
+    for arg in $(echo ${certbot_flags:-} | tr , '\n'); do
+        echo $arg
+    done
+}
+
 certonly() {
-    certbot certonly ${certbot_flags:-} -d ${certonly_domain} || true
+    certbot certonly $(certbot_args) -d ${certonly_domain} || true
     circusctl quit
 }
 
 renew() {
-    certbot renew ${certbot_flags:-}
+    certbot renew $(certbot_args)
     # letsencrypt recommends attempting renewals 2x per day beginning at an
     # arbitrary time of day.
     sleep 12h

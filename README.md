@@ -31,7 +31,7 @@ docker run \
     -e AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id) \
     -e AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key) \
     -v /etc/letsencrypt:/etc/letsencrypt \
-    brightmd/letsrenew:0.2
+    brightmd/letsrenew:0.3
 ```
 
 *If you are using Docker for Mac, replace `-v
@@ -58,7 +58,7 @@ docker run \
     -e AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key) \
     -e certbot_flags=$certbot_flags \
     -v /etc/letsencrypt:/etc/letsencrypt \
-    brightmd/letsrenew:0.2
+    brightmd/letsrenew:0.3
 ```
 
 ### AWS Route53 Policy example
